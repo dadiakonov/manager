@@ -32,6 +32,7 @@ public class SecurityConfig {
 
         return http
                 .authorizeExchange(authorize -> authorize
+                        .pathMatchers(HttpMethod.GET, "/actuator/prometheus").permitAll() // use certificate for authentication here in production (or use API key)
                         .pathMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
                         .pathMatchers(HttpMethod.POST, "/api/users").permitAll()
                         .anyExchange().authenticated()

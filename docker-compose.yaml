@@ -8,37 +8,53 @@ services:
       POSTGRES_DB: ${POSTGRES_DB_NAME:-user_manager}
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
-    ports:
-      - '5432:5432'
-#    networks:
-#      - private
+    networks:
+      - private
     volumes:
       - postgres-data:/var/lib/postgresql/data
 
-#  app:
-#    build:
-#      context: .
-#      dockerfile: docker/app/Dockerfile
-#    environment:
-#      APPLICATION_NAME: ${APPLICATION_NAME:-manager}
-#      JDBC_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB_NAME:-user_manager}
-#      R2DBC_URL: r2dbc:postgresql://postgres:5432/${POSTGRES_DB_NAME:-user_manager}
-#      R2DBC_POOL_MAX_SIZE: ${R2DBC_POOL_MAX_SIZE:-10}
-#      R2DBC_POOL_INITIAL_SIZE: ${R2DBC_POOL_INITIAL_SIZE:-10}
-#      R2DBC_USERNAME: ${POSTGRES_USER:-postgres}
-#      R2DBC_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
-#      JWT_SECRET: ${JWT_SECRET:-0Xw+kvQGzH2DHkxHwr8e9/iLY4oDQBzBMvK9k0t0veI=}
-#      JWT_SECRET_ALGORITHM: ${JWT_SECRET_ALGORITHM:-HmacSHA256}
-#      JWT_TTL: ${JWT_TTL:-900000}
-#    ports:
-#      - '8080:8080'
-#    depends_on:
-#      - postgres
-#    networks:
-#      - private
+  app:
+    build:
+      context: .
+      dockerfile: docker/app/Dockerfile
+    environment:
+      APPLICATION_NAME: ${APPLICATION_NAME:-manager}
+      JDBC_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB_NAME:-user_manager}
+      R2DBC_URL: r2dbc:postgresql://postgres:5432/${POSTGRES_DB_NAME:-user_manager}
+      R2DBC_POOL_MAX_SIZE: ${R2DBC_POOL_MAX_SIZE:-10}
+      R2DBC_POOL_INITIAL_SIZE: ${R2DBC_POOL_INITIAL_SIZE:-10}
+      R2DBC_USERNAME: ${POSTGRES_USER:-postgres}
+      R2DBC_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      JWT_SECRET: ${JWT_SECRET:-0Xw+kvQGzH2DHkxHwr8e9/iLY4oDQBzBMvK9k0t0veI=}
+      JWT_SECRET_ALGORITHM: ${JWT_SECRET_ALGORITHM:-HmacSHA256}
+      JWT_TTL: ${JWT_TTL:-900000}
+    ports:
+      - '8080:8080'
+    depends_on:
+      - postgres
+    networks:
+      - private
 
-#networks:
-#  private:
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - private
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    networks:
+      - private
+
+networks:
+  private:
 
 volumes:
   postgres-data:
