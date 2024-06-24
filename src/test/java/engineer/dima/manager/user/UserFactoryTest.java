@@ -25,7 +25,7 @@ public class UserFactoryTest {
     private UserFactory userFactory;
 
     @BeforeEach
-    public void setup() {
+    public void setUp() {
         userFactory = new UserFactory(passwordEncoder);
     }
 
