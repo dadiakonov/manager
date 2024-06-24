@@ -3,6 +3,7 @@ package engineer.dima.manager.auth.jwt;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
@@ -10,6 +11,7 @@ import java.util.Date;
 import java.util.function.Function;
 
 @Service
+@Slf4j
 public class JWTExtractor {
     private final SecretKey secretKey;
 
@@ -39,6 +41,8 @@ public class JWTExtractor {
                     .parseSignedClaims(token)
                     .getPayload();
         } catch (JwtException e) {
+            log.debug("JwtException", e);
+
             throw new JWTAuthenticationException();
         }
     }
