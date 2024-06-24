@@ -15,8 +15,8 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
-    private final static String USER_NOT_FOUND_MESSAGE = "User not found.";
-    private final static String USER_ALREADY_EXISTS_MESSAGE = "User already exists.";
+    private static final String USER_NOT_FOUND_MESSAGE = "User not found.";
+    private static final String USER_ALREADY_EXISTS_MESSAGE = "User already exists.";
 
     private final UserCreator userCreator;
     private final UserUpdater userUpdater;

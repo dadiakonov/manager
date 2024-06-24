@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CreatedUserCounter {
-    private final static String CREATED_USER_COUNTER_NAME = "created_user_total";
+    private static final String CREATED_USER_COUNTER_NAME = "created_user_total";
 
     private final Counter counter;
 

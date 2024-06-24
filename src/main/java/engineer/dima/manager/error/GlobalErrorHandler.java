@@ -17,7 +17,7 @@ import java.util.List;
 @RestControllerAdvice
 @Slf4j
 public class GlobalErrorHandler {
-    private final static String DEFAULT_ERROR_MESSAGE = "Something went wrong.";
+    private static final String DEFAULT_ERROR_MESSAGE = "Something went wrong.";
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody

@@ -26,7 +26,7 @@ public class JWTAuthenticationToken extends AbstractAuthenticationToken {
         return username;
     }
 
-    Authentication withAuthenticated() {
+    public Authentication withAuthenticated() {
         JWTAuthenticationToken cloned = new JWTAuthenticationToken(token, username);
         cloned.setAuthenticated(true);
 
